@@ -7,7 +7,23 @@ const visualRange = 100;
 
 var boids = [];
 var goals = [];
+var numBoidInGoal = 0;
 var colors = ["#ffffff", "#ff0000", "#00ff00", "#0000ff", "#ffff00", "#00ffff", "#ff00ff", "#aaaaaa", "#cc3300", "#33cc00"]
+
+var milisaniye=0, saniye = 0, dakika = 0, pause = false;
+
+function tick() {
+  if(milisaniye < 10) milisaniye++;
+  else if(saniye < 59) {
+    milisaniye = 0;
+    saniye++;
+  }else{
+    saniye = 0;
+    dakika++;
+  }
+  document.getElementById("sure").innerHTML = dakika + ":" + saniye + "." + milisaniye;
+  if(!pause) setTimeout(tick, 20);
+}
 
 function initBoids() {
   var centercoord = [Math.round(width / 4), Math.round(height / 2)]
@@ -114,6 +130,10 @@ function raceForGoal(boid) {
       if(dis <= 10){
         goal.IsEmpty = false
         boid.IsGoal = true
+        numBoidInGoal++;
+        if(numBoidInGoal === goals.length){
+          pause = true;
+        }
         //delete boid
         // for( var i = 0; i < boids.length; i++){ 
         //   if ( boids[i] == boid) { 
@@ -213,6 +233,7 @@ function animationLoop() {
 }
 
 window.onload = () => {
+  tick();
   // Make sure the canvas always fills the whole window
   window.addEventListener("resize", sizeCanvas, false);
   sizeCanvas();
