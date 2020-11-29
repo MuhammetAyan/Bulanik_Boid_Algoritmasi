@@ -8,6 +8,10 @@ const r_cohesion = 150;
 const r_align = 100;
 const r_dispersion = 50;
 
+const k_cohesion = 0.5;
+const k_align = 1;
+const k_dispersion = 1;
+
 var boids = [];
 var goals = [];
 var numBoidInGoal = 0;

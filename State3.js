@@ -12,14 +12,14 @@ function boidRules(boid) {
     if (otherBoid !== boid && !otherBoid.IsGoal && !boid.IsGoal) {
       if(dis < r_dispersion){
         var u = unitVektor(boid.x - otherBoid.x, boid.y - otherBoid.y)
-        centerX += u[0] /*/ distance_square(boid, otherBoid)*/
-        centerY += u[1] /*/ distance_square(boid, otherBoid)*/
+        centerX += u[0] * k_dispersion /*/ distance_square(boid, otherBoid)*/
+        centerY += u[1] * k_dispersion /*/ distance_square(boid, otherBoid)*/
       }else if(dis < r_align){
         // The resultant force will be zero so that the alignment can go to the goal.
       }else if(dis < r_cohesion){
         var u = unitVektor(boid.x - otherBoid.x, boid.y - otherBoid.y)
-        centerX -= u[0] /*/ distance_square(boid, otherBoid)*/
-        centerY -= u[1] /*/ distance_square(boid, otherBoid)*/
+        centerX -= u[0] * k_cohesion /*/ distance_square(boid, otherBoid)*/
+        centerY -= u[1] * k_cohesion /*/ distance_square(boid, otherBoid)*/
       }
     }
   }
@@ -57,8 +57,8 @@ function raceForGoal(boid) {
   }
   if(nearestGoal){
     var u = unitVektor(nearestGoal.x - boid.x, nearestGoal.y - boid.y);
-    boid.dx += u[0] * 0.25
-    boid.dy += u[1] * 0.25
+    boid.dx += u[0] * k_align
+    boid.dy += u[1] * k_align
   }
 }
 
