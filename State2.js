@@ -1,13 +1,12 @@
 // Move away from other boids that are too close to avoid colliding
 function avoidOthers(boid) {
   if (boid.IsGoal) return;
-  const minDistance = 50; // The distance to stay away from other boids
   const avoidFactor = 0.5; // Adjust velocity by this %
   let moveX = 0;
   let moveY = 0;
   for (let otherBoid of boids) {
     if (otherBoid !== boid && !otherBoid.IsGoal) {
-      if (distance(boid, otherBoid) < minDistance) {
+      if (distance(boid, otherBoid) < r_dispersion) {
         var u = unitVektor(boid.x - otherBoid.x, boid.y - otherBoid.y)
         moveX += u[0];
         moveY += u[1];
@@ -25,7 +24,7 @@ function avoidOthers(boid) {
 function raceForGoal(boid) {
   if (boid.IsGoal) return;
   var dis = distance(boid, boid.Goal);
-  if(dis <= 10){
+  if(dis <= 5){
     boid.Goal.IsEmpty = false
     boid.IsGoal = true
     numBoidInGoal++;
